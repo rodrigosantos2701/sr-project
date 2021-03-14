@@ -66,7 +66,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SimpleTabs() {
   const classes = useStyles();
-  const [value, setValue] = useState(2);
+  const [value, setValue] = useState(0);
+
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -81,21 +82,21 @@ export default function SimpleTabs() {
             onChange={handleChange}
             aria-label="simple tabs example"
           >
-            <Tab label="Cadastrar" {...a11yProps(0)} />
-            <Tab label="Localizar" {...a11yProps(1)} />
+            <Tab label="Localizar" {...a11yProps(0)} />
             <Tab label="Rotas" {...a11yProps(2)} />
+            <Tab label="Cadastrar Novo" {...a11yProps(1)} />
             <Tab label="LogOut" {...a11yProps(3)} />
 
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0}>
-          <Cadastrar />
-        </TabPanel>
-        <TabPanel value={value} index={1}>
           <BuscarNome />
         </TabPanel>
-        <TabPanel value={value} index={2}>
+        <TabPanel value={value} index={1}>
           <Rotas />
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          <Cadastrar />
         </TabPanel>
         <TabPanel value={value} index={3}>
           <LogOut />

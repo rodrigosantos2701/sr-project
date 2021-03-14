@@ -33,57 +33,60 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "6px",
   },
   buttonBotton: {
-    marginTop: "60px",
+    marginTop: "30px",
+    marginLeft: "10px",
   },
   buttonMinimizar: {
     marginTop: "30px",
   },
 }));
 
-export default function Cadastrar() {
+export default function Editar({ listFiltered }) {
+  const data = listFiltered[0];
+  console.log("==>", data);
   const classes = useStyles();
-  const [name, setName] = useState("");
-  const [age, setAge] = useState("");
-  const [escola, setEscola] = useState("");
-  const [turno, setTurno] = useState("");
-  const [serie, setSerie] = useState("");
-  const [turma, setTurma] = useState("");
-  const [cep, setCep] = useState("");
-  const [endereco, setEndereco] = useState("");
-  const [numero, setNumero] = useState("");
-  const [bairro, setBairro] = useState("");
-  const [complemento, setComplemento] = useState("");
-  const [responsavel, setResponsavel] = useState("");
-  const [parentesco, setParenstesco] = useState("");
-  const [cpf, setCpf] = useState("");
-  const [email, setEmail] = useState("");
-  const [telefone, setTelefone] = useState("");
-  const [celular, setCelular] = useState("");
-  const [emergencia, setEmergencia] = useState("");
-  const [obs1, setObs1] = useState("");
-  const [itinerario1, setItinerario1] = useState("");
-  const [rota1, setRota1] = useState("");
-  const [horario1, setHorario1] = useState("");
-  const [obs2, setObs2] = useState("");
-  const [itinerario2, setItinerario2] = useState("");
-  const [rota2, setRota2] = useState("");
-  const [horario2, setHorario2] = useState("");
-  const [obs3, setObs3] = useState("");
-  const [itinerario3, setItinerario3] = useState("");
-  const [rota3, setRota3] = useState("");
-  const [horario3, setHorario3] = useState("");
-  const [obs4, setObs4] = useState("");
-  const [itinerario4, setItinerario4] = useState("");
-  const [rota4, setRota4] = useState("");
-  const [horario4, setHorario4] = useState("");
-  const [anotacoes, setAnotacoes] = useState("");
+  const [name, setName] = useState(data.name);
+  const [age, setAge] = useState(data.age);
+  const [escola, setEscola] = useState(data.escola);
+  const [turno, setTurno] = useState(data.turno);
+  const [serie, setSerie] = useState(data.serie);
+  const [turma, setTurma] = useState(data.turma);
+  const [cep, setCep] = useState(data.cep);
+  const [endereco, setEndereco] = useState(data.endereco);
+  const [numero, setNumero] = useState(data.numero);
+  const [bairro, setBairro] = useState(data.bairro);
+  const [complemento, setComplemento] = useState(data.complemento);
+  const [responsavel, setResponsavel] = useState(data.responsavel);
+  const [parentesco, setParenstesco] = useState(data.parentesco);
+  const [cpf, setCpf] = useState(data.cpf);
+  const [email, setEmail] = useState(data.email);
+  const [telefone, setTelefone] = useState(data.telefone);
+  const [celular, setCelular] = useState(data.celular);
+  const [emergencia, setEmergencia] = useState(data.emergencia);
+  const [obs1, setObs1] = useState(data.itinerario1[2]);
+  const [rota1, setRota1] = useState(data.itinerario1[0]);
+  const [horario1, setHorario1] = useState(data.itinerario1[1]);
+  const [obs2, setObs2] = useState(data.itinerario2[2]);
+  const [rota2, setRota2] = useState(data.itinerario2[0]);
+  const [horario2, setHorario2] = useState(data.itinerario2[1]);
+  const [obs3, setObs3] = useState(data.itinerario3[2]);
+  const [rota3, setRota3] = useState(data.itinerario3[0]);
+  const [horario3, setHorario3] = useState(data.itinerario3[1]);
+  const [obs4, setObs4] = useState(data.itinerario4[2]);
+  const [rota4, setRota4] = useState(data.itinerario4[0]);
+  const [horario4, setHorario4] = useState(data.itinerario4[1]);
+  const [anotacoes, setAnotacoes] = useState(data.anotacoes);
+  const [itinerario1, setItinerario1] = useState(data.itinerario1[3]);
+  const [itinerario2, setItinerario2] = useState(data.itinerario2[3]);
+  const [itinerario3, setItinerario3] = useState(data.itinerario3[3]);
+  const [itinerario4, setItinerario4] = useState(data.itinerario4[3]);
   const [snack, setSnack] = useState(false);
-  const [snackError, setSnackError] = useState(false);
 
-  const createData = () => {
+  const handleUpdate = () => {
     if (name) {
-      const dataRef = firebase.database().ref("clientes");
-      const clientes = {
+      const dataRef = firebase.database().ref("clientes").child(data.id);
+
+      dataRef.update({
         name,
         age,
         escola,
@@ -98,49 +101,38 @@ export default function Cadastrar() {
         responsavel,
         parentesco,
         cpf,
-        celular,
-        telefone,
-        emergencia,
         email,
         itinerario1: [rota1, horario1, obs1, itinerario1],
         itinerario2: [rota2, horario2, obs2, itinerario2],
         itinerario3: [rota3, horario3, obs3, itinerario3],
         itinerario4: [rota4, horario4, obs4, itinerario4],
-
         anotacoes,
-      };
+      });
 
-      dataRef.push(clientes);
-      handleSnack();
-    } else {
-      handleSnackError();
-    }
+      handleSnack()
+    } 
+  };
+
+  const handlereload = () => {
+    window.location.reload();
   };
 
   const handleSnack = () => {
     setSnack(true);
-  };
-  const handleSnackError = () => {
-    setSnackError(true);
   };
 
   const handleSnackClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
-
-    if (snack){
-
-      window.location.reload();
-    }
-
     setSnack(false);
-    setSnackError(false);
+    window.location.reload();
+
   };
 
   return (
     <div className={classes.root}>
-      <h2>Cadastro de clientes</h2>
+      <h2>Editar dados do clientes</h2>
 
       <form className={classes.root} noValidate autoComplete="off">
         <Grid container spacing={1}>
@@ -591,54 +583,46 @@ export default function Cadastrar() {
               value={anotacoes}
             />
           </Grid>
+          <Button
+            className={classes.buttonBotton}
+            variant="outlined"
+            color="primary"
+            onClick={handleUpdate}
+          >
+            {" "}
+            Atualizar
+          </Button>
+          <Button
+            className={classes.buttonBotton}
+            variant="outlined"
+            color="secondary"
+            onClick={handlereload}
+          >
+            {" "}
+            Cancelar
+          </Button>
         </Grid>
-
-        <Button
-          className={classes.buttonBotton}
-          variant="outlined"
-          color="primary"
-          onClick={createData}
-        >
-          {" "}
-          Salvar
-        </Button>
       </form>
-      <div>
-        <Snackbar
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "left",
-          }}
-          open={snack}
-          autoHideDuration={6000}
-          onClose={handleSnackClose}
-          message="Salvo com sucesso!"
-          action={
-            <React.Fragment>
-              <Button color="secondary" size="small" onClick={handleSnackClose}>
-                Fechar
-              </Button>
-            </React.Fragment>
-          }
-        />
-        <Snackbar
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "left",
-          }}
-          open={snackError}
-          autoHideDuration={6000}
-          onClose={handleSnackClose}
-          message="Nome é Obrigatorio!"
-          action={
-            <React.Fragment>
-              <Button color="secondary" size="small" onClick={handleSnackClose}>
-                Fechar
-              </Button>
-            </React.Fragment>
-          }
-        />
-      </div>
+          <div>
+          <Snackbar
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "left",
+            }}
+            open={snack}
+            autoHideDuration={6000}
+            onClose={handleSnackClose}
+            message="Atualizado com sucesso!"
+            action={
+              <React.Fragment>
+                <Button color="secondary" size="small" onClick={handleSnackClose}>
+                  Fechar
+                </Button>
+              </React.Fragment>
+            }
+          />
+        </div>
     </div>
+  
   );
 }

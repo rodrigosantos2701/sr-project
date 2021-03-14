@@ -91,6 +91,31 @@ export default function Rotas() {
           </Select>
         </FormControl>{" "}
       </div>
+      <div className={classes.root}>
+        {!rota ? (
+          ""
+        ) : (
+          <Grid container spacing={1} direction="row" xs={12}>
+            <Grid item xs={2}>
+              <Typography variant="subtitle1">Nome</Typography>
+            </Grid>
+            <Grid item xs={2}>
+              <Typography variant="subtitle1">Endereço</Typography>
+            </Grid>
+            <Grid item xs={2}>
+              <Typography variant="subtitle1">Complemento</Typography>
+            </Grid>
+            <Grid item xs={1}>
+              <Typography variant="subtitle1">Turno</Typography>
+            </Grid>
+            <Grid item xs={5}>
+              <Typography variant="subtitle1">Horário</Typography>
+            </Grid>
+          </Grid>
+        )}
+        {!rota ? "" : <hr style={{ marginRight: "10%",  border: "2px solid gray", borderRadius: "5px" ,marginBottom: "20px",
+}} />}
+      </div>
       {list ? (
         list.map((item) => (
           <div className={classes.root}>
@@ -99,50 +124,87 @@ export default function Rotas() {
                 <Typography variant="subtitle1">{item.name}</Typography>
               </Grid>
               <Grid item xs={2}>
-                <Typography variant="subtitle1">{item.endereco}</Typography>
+                <Typography variant="subtitle1">
+                  {item.endereco},{item.numero} - {item.bairro}
+                </Typography>
               </Grid>
-              <Grid item xs={1}>
+              <Grid item xs={2}>
                 <Typography variant="subtitle1">{item.complemento}</Typography>
               </Grid>
               <Grid item xs={1}>
                 <Typography variant="subtitle1">{item.turno}</Typography>
               </Grid>
 
-              <Grid item xs={6}>
-                    {item.itinerario1[0] === rota ? (
-                <Grid container spacing={1} direction="row" xs={8}>
-                  <Grid item xs={2}>
-                        <Typography variant="body1">
-                          {item.itinerario1[1]}
-                        </Typography>
+              <Grid item xs={5}>
+                {item.itinerario1[0] === rota ? (
+                  <Grid container spacing={1} direction="row" xs={8}>
+                    <Grid item xs={2}>
+                      <Typography variant="body1">
+                        {item.itinerario1[1]}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Typography variant="body1">
+                        {item.itinerario1[2]}
+                      </Typography>
+                    </Grid>
                   </Grid>
-                  <Grid item xs={10}>
-                        <Typography variant="body1">
-                          {item.itinerario1[2]}
-                        </Typography>
+                ) : (
+                  ""
+                )}
+                {item.itinerario2[0] === rota ? (
+                  <Grid container spacing={1} direction="row" xs={8}>
+                    <Grid item xs={2}>
+                      <Typography variant="body1">
+                        {item.itinerario2[1]}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Typography variant="body1">
+                        {item.itinerario2[2]}
+                      </Typography>
+                    </Grid>
                   </Grid>
-                      </Grid>
-                    ) : (
-                      ""
-                      )}
-                {item.itinerario2[0] === rota
-                  ? item.itinerario2.map((item) => (
-                      <Typography variant="body1">{item}</Typography>
-                    ))
-                  : ""}
-                {item.itinerario3[0] === rota
-                  ? item.itinerario3.map((item) => (
-                      <Typography variant="body1">{item}</Typography>
-                    ))
-                  : ""}
-                {item.itinerario4[0] === rota
-                  ? item.itinerario4.map((item) => (
-                      <Typography variant="body1">{item}</Typography>
-                    ))
-                  : ""}
+                ) : (
+                  ""
+                )}
+
+                {item.itinerario3[0] === rota ? (
+                  <Grid container spacing={1} direction="row" xs={8}>
+                    <Grid item xs={2}>
+                      <Typography variant="body1">
+                        {item.itinerario3[1]}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Typography variant="body1">
+                        {item.itinerario3[2]}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                ) : (
+                  ""
+                )}
+
+                {item.itinerario4[0] === rota ? (
+                  <Grid container spacing={1} direction="row" xs={8}>
+                    <Grid item xs={2}>
+                      <Typography variant="body1">
+                        {item.itinerario4[1]}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Typography variant="body1">
+                        {item.itinerario4[2]}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                ) : (
+                  ""
+                )}
               </Grid>
             </Grid>
-            <hr style={{marginRight: "10%"}}/>
+            <hr style={{ marginRight: "15%" }} />
           </div>
         ))
       ) : (
