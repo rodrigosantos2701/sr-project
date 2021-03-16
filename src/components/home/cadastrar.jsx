@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import firebase from "../../firebase";
@@ -9,6 +9,8 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Grid from "@material-ui/core/Grid";
 import Snackbar from "@material-ui/core/Snackbar";
+import { StoredContext } from '../../providers/store';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,7 +35,8 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "6px",
   },
   buttonBotton: {
-    marginTop: "60px",
+    marginTop: "30px",
+    marginRight: "10px"
   },
   buttonMinimizar: {
     marginTop: "30px",
@@ -79,6 +82,8 @@ export default function Cadastrar() {
   const [anotacoes, setAnotacoes] = useState("");
   const [snack, setSnack] = useState(false);
   const [snackError, setSnackError] = useState(false);
+  const { value, setValue } = useContext(StoredContext)
+
 
   const createData = () => {
     if (name) {
@@ -106,12 +111,28 @@ export default function Cadastrar() {
         itinerario2: [rota2, horario2, obs2, itinerario2],
         itinerario3: [rota3, horario3, obs3, itinerario3],
         itinerario4: [rota4, horario4, obs4, itinerario4],
-
+        rota1: rota1,
+        rota2: rota2,
+        rota3: rota3,
+        rota4: rota4,
+        horario1: horario1,
+        horario2: horario2,
+        horario3: horario3,
+        horario4: horario4,
+        obs1: obs1,
+        obs2: obs2,
+        obs3: obs3,
+        obs4: obs4,
+        iti1: itinerario1,
+        iti2: itinerario2,
+        iti3: itinerario3,
+        iti4: itinerario4,
         anotacoes,
       };
 
       dataRef.push(clientes);
       handleSnack();
+      setValue(0);
     } else {
       handleSnackError();
     }
@@ -127,11 +148,6 @@ export default function Cadastrar() {
   const handleSnackClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
-    }
-
-    if (snack){
-
-      window.location.reload();
     }
 
     setSnack(false);
@@ -290,7 +306,7 @@ export default function Cadastrar() {
                 label="Escola"
                 onChange={(e) => setParenstesco(e.target.value)}
               >
-                <MenuItem value={"pai"}>Pai</MenuItem>
+                <MenuItem value={"Pai"}>Pai</MenuItem>
                 <MenuItem value={"Mãe"}>Mãe</MenuItem>
                 <MenuItem value={"Responsável"}>Responsável</MenuItem>
                 <MenuItem value={"Avô"}>Avô</MenuItem>
@@ -602,6 +618,15 @@ export default function Cadastrar() {
           {" "}
           Salvar
         </Button>
+        <Button
+            className={classes.buttonBotton}
+            variant="outlined"
+            color="secondary"
+            onClick={(e)=> setValue(0)}
+          >
+            {" "}
+            Cancelar
+          </Button>
       </form>
       <div>
         <Snackbar
@@ -641,4 +666,5 @@ export default function Cadastrar() {
       </div>
     </div>
   );
+  
 }

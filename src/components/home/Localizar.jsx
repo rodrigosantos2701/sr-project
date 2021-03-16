@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import firebase from "../../firebase";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
@@ -11,6 +11,10 @@ import ModalView from "./modalView";
 import Link from "@material-ui/core/Link";
 import Editar from "./editar";
 import Snackbar from "@material-ui/core/Snackbar";
+import { StoredContext } from "../../providers/store";
+import credential from "../../utils/relatorioclientesantarosa-a45ba7969463.json";
+import { GoogleSpreadsheet } from "google-spreadsheet";
+import Spiner from "../../utils/spiner";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,9 +57,6 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2, 4, 3),
     width: "65%",
   },
-  full: {
-    marginRight: "2%",
-  },
   linkName: {
     fontSize: "18px",
   },
@@ -68,8 +69,10 @@ export default function Localizar() {
   const [localizarId, setLocalizarId] = useState("");
   const [open, setOpen] = useState(false);
   const [del, setDel] = useState(false);
-  const [edit, setEdit] = useState(false);
   const [snack, setSnack] = useState(false);
+  const { edit, setEdit } = useContext(StoredContext);
+  const [snackExport, setSnackExport] = useState(false);
+  const [isLoading, setIsLoading ] = useState(false);
 
   useEffect(() => {
     const dataRef = firebase.database().ref("clientes");
@@ -93,6 +96,7 @@ export default function Localizar() {
     setLocalizar("");
     setLocalizarId("");
     handleSnack();
+    setEdit(false);
   };
 
   const handleSnack = () => {
@@ -104,10 +108,8 @@ export default function Localizar() {
       return;
     }
 
-    if (snack) {
-    }
-
     setSnack(false);
+    setSnackExport(false);
   };
 
   const listFiltered = list.filter((item) => {
@@ -118,6 +120,26 @@ export default function Localizar() {
     return item.id.toLowerCase().includes(localizarId.toLowerCase());
   });
 
+  const handleSnackExportar = async () => {
+    setIsLoading(true)
+    const doc = new GoogleSpreadsheet(
+      "1mqcc970ejWHqucUNaGkJyk9UjsiRgKeSMlxuZTfiDcY"
+    );
+    const client_email =
+      "santarosa@relatorioclientesantarosa.iam.gserviceaccount.com";
+    const { private_key } = credential;
+    await doc.useServiceAccountAuth({
+      client_email,
+      private_key,
+    });
+    await doc.loadInfo();
+    const sheet = doc.sheetsByIndex[0];
+    const sheetData = listFiltered;
+    await sheet.addRows(sheetData)
+    setSnackExport(true);
+    setIsLoading(false);
+  };
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -125,6 +147,7 @@ export default function Localizar() {
   return (
     <div className={classes.root}>
       <h2>Localizar cadastro</h2>
+
       <div className={classes.searchBox}>
         <TextField
           className={classes.full}
@@ -137,7 +160,7 @@ export default function Localizar() {
         />
 
         <Button
-          stylr={{ marginLeft: "50px" }}
+          style={{ marginLeft: "5px" }}
           variant="outlined"
           size="large"
           color="primary"
@@ -145,6 +168,19 @@ export default function Localizar() {
         >
           Limpar
         </Button>
+        <Button
+          style={{ marginLeft: "80px" }}
+          variant="outlined"
+          size="large"
+          color="default"
+          onClick={handleSnackExportar}
+        >
+          Exportar
+        </Button>
+      </div>
+      <div style={{display: "flex", justifyContent:"center"}} >
+        {isLoading?<Spiner  />: ''}
+
       </div>
       <p className={classes.subTitle}> Nome do Aluno | Sigla da Escola</p>
       <hr
@@ -167,6 +203,23 @@ export default function Localizar() {
           autoHideDuration={6000}
           onClose={handleSnackClose}
           message="Cadastro deletado!"
+          action={
+            <React.Fragment>
+              <Button color="secondary" size="small" onClick={handleSnackClose}>
+                Fechar
+              </Button>
+            </React.Fragment>
+          }
+        />
+        <Snackbar
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "left",
+          }}
+          open={snackExport}
+          autoHideDuration={6000}
+          onClose={handleSnackClose}
+          message="Exportado excel Online planilha - Clientes Santa Rosa "
           action={
             <React.Fragment>
               <Button color="secondary" size="small" onClick={handleSnackClose}>

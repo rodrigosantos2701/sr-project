@@ -12,6 +12,9 @@ function ModalView(listFiltered) {
     complemento,
     cpf,
     email,
+    celular,
+    telefone,
+    emergencia,
     endereco,
     escola,
     numero,
@@ -35,6 +38,7 @@ function ModalView(listFiltered) {
       <h3 style={{display: "flex", flexDirection:"row"}}>Bairro: {bairro} | Cep: {cep}</h3>
       <h3 style={{display: "flex", flexDirection:"row"}}>Obs: {anotacoes}</h3>
       <h3>{parentesco} : {responsavel}</h3>
+      <h3>Celular: {celular} | Telefone: {telefone} | Emergencia: {emergencia}</h3>
       <h3>CPF: {cpf}</h3>
       <h3>Email: {email}</h3>
       <div style={{display:"flex", justifyContent:"space-evenly"}}>

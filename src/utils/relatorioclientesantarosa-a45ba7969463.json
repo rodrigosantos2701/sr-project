@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "relatorioclientesantarosa",
+  "private_key_id": "a45ba79694635ad91177d749484c27bc34a65b1c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEuwIBADANBgkqhkiG9w0BAQEFAASCBKUwggShAgEAAoIBAQCOLR9HrKetdbxf\nZUMxjkdUv451FNwdBB+LQjL2hZb+tPoWuq+PUr1qW86WI+GIBV8IQjyp8fPR8CLi\nqqHDwjAWtBi9qOB8IgibfoOt2X+Csz6d4onABfWBZ4WjwAtYdLdLd0b9QClhmOp2\nqTbvIbRwByrtcLQ8JWFDXp90PT+jPXEJBs44BXfFL8c9UV0pd4IR2ucj84zHiLs2\nZuMzV4ge643ZdfQtBZuKqb3IgKFlXax0RRiEM3QHNhDFTixMHqq1wR0Fqm3G/jH2\nWbJeHXOZuWeBc/8vAMxaACP0t2pJOodxShEFTI1rT9iipDHxeXuSaKlyo9AUHBTW\ncBnFkx5RAgMBAAECgf9slFOw8EtDbuOASvqtiiUeRM+sIc3Jz3zl5rs82SZEiSVL\nmDk1gZkm2Me05rbPutFf1bhr/sb1GXkIna3e0rR8BACNR1kSN4nrk7Mh/204J1gD\nO+xnLkHJUMiCeVZ7ShLNpr6CVoKAaGieCCPwobWydwyzaZvC8ZX5J99rpT8VEj9R\nt9JPznjZFkzz41QBHqS7iXUO49aJ0J7S64QmWVbdXAzjlUzALL3NtV0BGzQfmRFm\neA7BUkTBPltlkTmLY1xOQPCrXi0I6ScRkN+0U61mORq8fr6nnhfYj8VJnew1pBSg\nKQCu2xPhzJ5HUn0SFHOM+Vc1Ijj8kQM8xarLXRECgYEAxm/r6Tq+rKELScp2gdzj\n/jyQ9SEysjN17l0d9LZB2RlvxJBSLWKQ6uFyZ9FccT8LO2txsVjs40Nj/cOjiDtM\ny7PiL3b38EYcAJ0yHv8zzV7S0xetvLBGw5rSHp1GzTV0DXTjg32swQzJVp9bvobh\nN0i6khjKYGNARmIpV/RkKL0CgYEAt2s537yOKkyMpJVXw1LASA5VPku4a0oteIUh\n900ZWjOu3nVOVbilQWPlOF47LPHG/VVUbykWzP4rFgx0hcFn0JmfrvMeLssAU1MS\nRaSem9n+FaUUPdjKn+lXnUNWywO6q0yHwDTjgpm0cZQ6eKnSGgN8mGMPiN1GCSJZ\n/9TVVyUCgYA+q7ZcEJuLtcj04yaOWQ8AimxVnsh+E1aZk3sUgENHp4rvD42Em+6c\n39rcAvkpIvoPKB3eHvGhzPTVfmY1blUQuJ0k1HP1xI6vevYLaBoaMGpxFLdgMmQG\n/uyBkrZ7tPgUD+iS7KwUxE8KNoYpJDwY07Vo0r+HtZDlKbdY+exwGQKBgQCWuib1\nFZ4+ZGmvVoqomHgqvpyOdOs4P9zeDYm8ED+lQJOTfBLDntkuw0i66bT3WjiMNnMM\nZle2XahKljGrOSR258exnVhQW8IIt1tsn7s3mAyU/POFX4Ijpz24nn3Ul1vvKRTl\nfpD34hfGvmjOf7+IYRUipUU+05eaKgCLm/s1gQKBgEG8EiYtzPb6Gt6hgId57y2e\niFzNibM18TxhHbaJGqMRstBYnGMC27NedY3CrcDKKvgae1GrYMvob4iY3Mn7VcLg\nGgyrPGeD/PkILdyoGJf4fTQUTasXRJ3L136nC3WJpyYBCmmeImGNKorNxhKGMJJ0\nnYAsf98+q3o5UgzbtpGi\n-----END PRIVATE KEY-----\n",
+  "client_email": "santarosa@relatorioclientesantarosa.iam.gserviceaccount.com",
+  "client_id": "101407738272768034783",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/santarosa%40relatorioclientesantarosa.iam.gserviceaccount.com"
+}

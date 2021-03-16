@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import firebase from "../../firebase";
@@ -9,6 +9,8 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Grid from "@material-ui/core/Grid";
 import Snackbar from "@material-ui/core/Snackbar";
+import { StoredContext } from '../../providers/store';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -81,6 +83,8 @@ export default function Editar({ listFiltered }) {
   const [itinerario3, setItinerario3] = useState(data.itinerario3[3]);
   const [itinerario4, setItinerario4] = useState(data.itinerario4[3]);
   const [snack, setSnack] = useState(false);
+  const { edit, setEdit } = useContext(StoredContext)
+
 
   const handleUpdate = () => {
     if (name) {
@@ -94,6 +98,9 @@ export default function Editar({ listFiltered }) {
         serie,
         turma,
         cep,
+        celular,
+        telefone,
+        emergencia,
         endereco,
         numero,
         bairro,
@@ -109,13 +116,11 @@ export default function Editar({ listFiltered }) {
         anotacoes,
       });
 
-      handleSnack()
-    } 
+      handleSnack();
+      setEdit(false);
+    }
   };
 
-  const handlereload = () => {
-    window.location.reload();
-  };
 
   const handleSnack = () => {
     setSnack(true);
@@ -125,14 +130,13 @@ export default function Editar({ listFiltered }) {
     if (reason === "clickaway") {
       return;
     }
-    setSnack(false);
-    window.location.reload();
 
+    setSnack(false);
   };
 
   return (
     <div className={classes.root}>
-      <h2>Editar dados do clientes</h2>
+      <h2>Cadastro de clientes</h2>
 
       <form className={classes.root} noValidate autoComplete="off">
         <Grid container spacing={1}>
@@ -590,39 +594,38 @@ export default function Editar({ listFiltered }) {
             onClick={handleUpdate}
           >
             {" "}
-            Atualizar
+            Salvar
           </Button>
           <Button
             className={classes.buttonBotton}
             variant="outlined"
             color="secondary"
-            onClick={handlereload}
+            onClick={(e)=> setEdit(false)}
           >
             {" "}
             Cancelar
           </Button>
         </Grid>
       </form>
-          <div>
-          <Snackbar
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "left",
-            }}
-            open={snack}
-            autoHideDuration={6000}
-            onClose={handleSnackClose}
-            message="Atualizado com sucesso!"
-            action={
-              <React.Fragment>
-                <Button color="secondary" size="small" onClick={handleSnackClose}>
-                  Fechar
-                </Button>
-              </React.Fragment>
-            }
-          />
-        </div>
+      <div>
+        <Snackbar
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "left",
+          }}
+          open={snack}
+          autoHideDuration={6000}
+          onClose={handleSnackClose}
+          message="Cadastro Atualizado!"
+          action={
+            <React.Fragment>
+              <Button color="secondary" size="small" onClick={handleSnackClose}>
+                Fechar
+              </Button>
+            </React.Fragment>
+          }
+        />
+      </div>
     </div>
-  
   );
 }

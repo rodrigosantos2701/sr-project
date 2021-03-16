@@ -1,4 +1,4 @@
-import React, { useState }from "react";
+import React, { useContext, useState }from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -10,6 +10,7 @@ import Cadastrar from "./cadastrar";
 import BuscarNome from "./Localizar";
 import Rotas from "./Rotas";
 import LogOut from "./logout";
+import { StoredContext } from '../../providers/store';
 
 function Copyright() {
   return (
@@ -66,8 +67,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SimpleTabs() {
   const classes = useStyles();
-  const [value, setValue] = useState(0);
-
+  const { value, setValue } = useContext(StoredContext)
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

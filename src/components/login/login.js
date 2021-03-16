@@ -1,27 +1,26 @@
-import React, { useRef }from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import { useAuth } from '../../context/AuthContext';
-import { useHistory } from 'react-router-dom';
-
+import React, { useRef , useState} from "react";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import Link from "@material-ui/core/Link";
+import Box from "@material-ui/core/Box";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+import { useAuth } from "../../context/AuthContext";
+import { useHistory } from "react-router-dom";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
+      {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
         Your Website
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }
@@ -29,16 +28,16 @@ function Copyright() {
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -47,19 +46,26 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Login() {
-
   const classes = useStyles();
 
-  const formData = useRef()
-  const { login } = useAuth()
-  const history = useHistory()
-
+  const formData = useRef();
+  const { login } = useAuth();
+  const history = useHistory();
+  const [ error, setError ] = useState(false);
 
   async function handleSubmit(e) {
-    e.preventDefault()
-      await login (formData.current.email.value , formData.current.password.value)
-      history.push('/sr') 
-  }  
+    e.preventDefault();
+    try {
+      await login(
+        formData.current.email.value,
+        formData.current.password.value
+      );
+      history.push("/sr");
+    }
+    catch (error) {
+     setError(true)
+    }
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -72,8 +78,7 @@ export default function Login() {
           Sign in
         </Typography>
 
-        <form className={classes.form} ref={formData} onSubmit={handleSubmit} 
->
+        <form className={classes.form} ref={formData} onSubmit={handleSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -83,7 +88,6 @@ export default function Login() {
             type="email"
             name="email"
             autoFocus
-
           />
           <TextField
             variant="outlined"
@@ -94,7 +98,6 @@ export default function Login() {
             type="password"
             autoComplete="current-password"
             name="password"
-
           />
 
           <Button
@@ -103,9 +106,12 @@ export default function Login() {
             variant="contained"
             color="primary"
             className={classes.submit}
-                    >
+          >
             Sign In
           </Button>
+          {error? <Typography  variant="subtitle1" color="secondary">*E-mail ou password não é válido, tente outra vez.</Typography>
+            :""}
+
         </form>
       </div>
       <Box mt={8}>

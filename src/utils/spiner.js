@@ -16,7 +16,8 @@ export default function Spiner() {
 
   return (
     <div className={classes.root}>
-      <CircularProgress />
+      <h3>Aguarde, conectando ao Google Sheets ...</h3>
+      <CircularProgress color="primary"/>
     </div>
   );
 }
