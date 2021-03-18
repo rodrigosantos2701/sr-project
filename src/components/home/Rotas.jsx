@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Rotas() {
+  debugger
   const classes = useStyles();
   const [list, setList] = useState([]);
   const [rota, setRota] = useState(0);
@@ -52,13 +53,22 @@ export default function Rotas() {
         arrayData.push(data[id]);
       }
 
-      const arrayDataFiltered = arrayData.filter(
+      const arrayDataNoFiltered = arrayData.filter(
         (item) =>
           item.itinerario1[0] === rota ||
           item.itinerario2[0] === rota ||
           item.itinerario3[0] === rota ||
           item.itinerario4[0] === rota
       );
+
+      const arrayDataFiltered =  
+      arrayDataNoFiltered.sort((a, b) => (
+          a.horario1 > b.horario1 ? 1 : b.horario1 > a.horario1 ? -1 : 0 ||
+          a.horario2 > b.horario2 ? 1 : b.horario2 > a.horario2 ? -1 : 0 ||
+          a.horario3 > b.horario3 ? 1 : b.horario3 > a.horario3 ? -1 : 0 ||
+          a.horario4 > b.horario4 ? 1 : b.horario4 > a.horario4 ? -1 : 0
+        ))
+      
 
       setList(arrayDataFiltered);
     });
@@ -113,8 +123,18 @@ export default function Rotas() {
             </Grid>
           </Grid>
         )}
-        {!rota ? "" : <hr style={{ marginRight: "10%",  border: "2px solid gray", borderRadius: "5px" ,marginBottom: "20px",
-}} />}
+        {!rota ? (
+          ""
+        ) : (
+          <hr
+            style={{
+              marginRight: "10%",
+              border: "2px solid gray",
+              borderRadius: "5px",
+              marginBottom: "20px",
+            }}
+          />
+        )}
       </div>
       {list ? (
         list.map((item) => (

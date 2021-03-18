@@ -72,7 +72,7 @@ export default function Localizar() {
   const [snack, setSnack] = useState(false);
   const { edit, setEdit } = useContext(StoredContext);
   const [snackExport, setSnackExport] = useState(false);
-  const [isLoading, setIsLoading ] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const dataRef = firebase.database().ref("clientes");
@@ -121,7 +121,7 @@ export default function Localizar() {
   });
 
   const handleSnackExportar = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     const doc = new GoogleSpreadsheet(
       "1mqcc970ejWHqucUNaGkJyk9UjsiRgKeSMlxuZTfiDcY"
     );
@@ -134,8 +134,85 @@ export default function Localizar() {
     });
     await doc.loadInfo();
     const sheet = doc.sheetsByIndex[0];
-    const sheetData = listFiltered;
-    await sheet.addRows(sheetData)
+    const sheetData = list;
+    await sheet.clear();
+    await sheet.setHeaderRow({
+      col1: "name",
+      col3: "escola",
+      col4: "turno",
+      col2: "age",
+      col5: "serie",
+      col6: "turma",
+      col8: "endereco",
+      col9: "numero",
+      col11: "complemento",
+      col10: "bairro",
+      col7: "cep",
+      col13: "parentesco",
+      col12: "responsavel",
+      col14: "cpf",
+      col15: "celular",
+      col16: "telefone",
+      col17: "emergencia",
+      col18: "email",
+      col31: "iti1",
+      col19: "rota1",
+      col23: "horario1",
+      col27: "obs1",
+      col32: "iti2",
+      col20: "rota2",
+      col24: "horario2",
+      col28: "obs2",
+      col33: "iti3",
+      col21: "rota3",
+      col25: "horario3",
+      col29: "obs3",
+      col34: "iti4",
+      col22: "rota4",
+      col26: "horario4",
+      col30: "obs4",
+      col35: "anotacoes",
+    });
+
+    await sheet.addRows(sheetData);
+    await sheet.setHeaderRow({
+      col1: "Nome",
+      col3: "Escola",
+      col4: "Turno",
+      col2: "Data Nascimento",
+      col5: "Serie",
+      col6: "Turma",
+      col8: "Endereco",
+      col9: "Numero",
+      col11: "Complemento",
+      col10: "Bairro",
+      col7: "CEP",
+      col13: "Parentesco",
+      col12: "Responsavel",
+      col14: "CPF",
+      col15: "Celular",
+      col16: "Telefone",
+      col17: "Emergencia",
+      col18: "E-mail",
+      col31: "1ºItinerario",
+      col19: "1ºRota",
+      col23: "1°Horario",
+      col27: "1ºObs",
+      col32: "2ºItinerario",
+      col20: "2ºRota",
+      col24: "2ºHorario",
+      col28: "2ºObs",
+      col33: "3ºItinerario",
+      col21: "3ºRota",
+      col25: "3ºHorario",
+      col29: "3ºObs",
+      col34: "4ºItinerario",
+      col22: "4ºRota",
+      col26: "4ºHorario",
+      col30: "4ºObs",
+      col35: "Anotacoes",
+    });
+
     setSnackExport(true);
     setIsLoading(false);
   };
@@ -148,6 +225,21 @@ export default function Localizar() {
     <div className={classes.root}>
       <h2>Localizar cadastro</h2>
 
+    {localizarId?
+
+      <div>
+        <Button
+          style={{ marginLeft: "5px" }}
+          variant="outlined"
+          size="large"
+          color="primary"
+          onClick={(e) => (setLocalizar(""), setLocalizarId(""), setEdit(""))}
+        >
+          Nova Busca
+        </Button>
+      </div>
+
+:
       <div className={classes.searchBox}>
         <TextField
           className={classes.full}
@@ -158,7 +250,6 @@ export default function Localizar() {
           value={localizar}
           size={"small"}
         />
-
         <Button
           style={{ marginLeft: "5px" }}
           variant="outlined"
@@ -166,8 +257,9 @@ export default function Localizar() {
           color="primary"
           onClick={(e) => (setLocalizar(""), setLocalizarId(""), setEdit(""))}
         >
-          Limpar
+          Localizar
         </Button>
+
         <Button
           style={{ marginLeft: "80px" }}
           variant="outlined"
@@ -178,9 +270,9 @@ export default function Localizar() {
           Exportar
         </Button>
       </div>
-      <div style={{display: "flex", justifyContent:"center"}} >
-        {isLoading?<Spiner  />: ''}
-
+}
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        {isLoading ? <Spiner /> : ""}
       </div>
       <p className={classes.subTitle}> Nome do Aluno | Sigla da Escola</p>
       <hr
