@@ -12,8 +12,8 @@ function App() {
           <AuthProvider>
           <div style={{ display: "flex" }}>
             <Switch>
-              <Route exact path="/" component={Login} />
-              {/* <PrivateRoute exact path="/sr" component={HomePage} /> */}
+              {/* <Route exact path="/" component={Login} /> */}
+              <PrivateRoute exact path="/sr" component={HomePage} />
               <Route exact path="/sr" component={HomePage} />
             </Switch>
           </div>
