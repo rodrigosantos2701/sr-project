@@ -15,6 +15,8 @@ import { StoredContext } from "../../providers/store";
 import credential from "../../utils/relatorioclientesantarosa-a45ba7969463.json";
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import Spiner from "../../utils/spiner";
+import { green } from '@material-ui/core/colors';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "2%",
   },
   button: {
-    marginLeft: "1%",
+    marginLeft: "6%",
   },
   linhaLista: {
     display: "flex",
@@ -43,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
-    border: "5px solid #3F51B5",
+    border: "5px solid rgb(76 175 80)",
     borderRadius: "5px",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
@@ -250,7 +252,7 @@ export default function Localizar() {
           value={localizar}
           size={"small"}
         />
-        <Button
+        {/* <Button
           style={{ marginLeft: "5px" }}
           variant="outlined"
           size="large"
@@ -258,7 +260,7 @@ export default function Localizar() {
           onClick={(e) => (setLocalizar(""), setLocalizarId(""), setEdit(""))}
         >
           Localizar
-        </Button>
+        </Button> */}
 
         <Button
           style={{ marginLeft: "80px" }}
@@ -375,7 +377,7 @@ export default function Localizar() {
                             <Button
                               className={classes.button}
                               variant="outlined"
-                              color="primary"
+                              style={{ color: green[800] }}
                               onClick={(e) => setOpen(true)}
                             >
                               Detalhes
@@ -383,7 +385,7 @@ export default function Localizar() {
                             <Button
                               className={classes.button}
                               variant="outlined"
-                              color="default"
+                              color="primary"
                               onClick={(e) => setEdit(true)}
                             >
                               Editar
@@ -433,7 +435,7 @@ export default function Localizar() {
                 <Button
                   className={classes.button}
                   variant="outlined"
-                  color="primary"
+                  style={{ color: green[800] }}
                   onClick={(e) => setOpen(false)}
                 >
                   Fechar
