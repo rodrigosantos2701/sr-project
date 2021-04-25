@@ -83,6 +83,7 @@ export default function Editar({ listFiltered }) {
   const [itinerario3, setItinerario3] = useState(data.itinerario3[3]);
   const [itinerario4, setItinerario4] = useState(data.itinerario4[3]);
   const [snack, setSnack] = useState(false);
+  const [matricula, setMatricula ] = useState(data.matricula);
   const { edit, setEdit } = useContext(StoredContext)
 
 
@@ -114,6 +115,7 @@ export default function Editar({ listFiltered }) {
         itinerario3: [rota3, horario3, obs3, itinerario3],
         itinerario4: [rota4, horario4, obs4, itinerario4],
         anotacoes,
+        matricula,
       });
 
       handleSnack();
@@ -141,6 +143,15 @@ export default function Editar({ listFiltered }) {
       <form className={classes.root} noValidate autoComplete="off">
         <Grid container spacing={1}>
           <Grid item xs={12}>
+          <TextField
+              className={classes.medium}
+              id="outlined-required"
+              label="Matricula"
+              variant="outlined"
+              onChange={(e) => setMatricula(e.target.value)}
+              value={matricula}
+            />
+
             <TextField
               className={classes.large}
               required

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import firebase from "../../firebase";
@@ -82,8 +82,18 @@ export default function Cadastrar() {
   const [anotacoes, setAnotacoes] = useState("");
   const [snack, setSnack] = useState(false);
   const [snackError, setSnackError] = useState(false);
-  const { value, setValue } = useContext(StoredContext)
+  const { value, setValue } = useContext(StoredContext);
+  const [matricula, setMatricula ] = useState('');
 
+
+
+  useEffect(()=> {
+    let min = Math.ceil(5000);
+    let max = Math.floor(10000);
+    let matricula = Math.floor(Math.random() * (max -min)) + min
+    setMatricula(matricula)
+
+  },[])
 
   const createData = () => {
     if (name) {
@@ -128,6 +138,7 @@ export default function Cadastrar() {
         iti3: itinerario3,
         iti4: itinerario4,
         anotacoes,
+        matricula:matricula
       };
 
       dataRef.push(clientes);
@@ -154,13 +165,23 @@ export default function Cadastrar() {
     setSnackError(false);
   };
 
+
   return (
     <div className={classes.root}>
       <h2>Cadastro de clientes</h2>
 
       <form className={classes.root} noValidate autoComplete="off">
         <Grid container spacing={1}>
+
           <Grid item xs={12}>
+        <TextField
+              className={classes.medium}
+              id="outlined-required"
+              label="Matricula"
+              variant="outlined"
+              onChange={(e) => setMatricula(e.target.value)}
+              value={matricula}
+            />
             <TextField
               className={classes.large}
               required

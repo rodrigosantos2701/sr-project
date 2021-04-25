@@ -49,6 +49,7 @@ function ModalView(listFiltered) {
     itinerario2,
     itinerario3,
     itinerario4,
+    matricula,
   } = data.listFiltered[0];
 
   const classes = useStyles();
@@ -56,11 +57,23 @@ function ModalView(listFiltered) {
   return (
     <div>
       <Grid container className={classes.container}>
+      <Grid item className={classes.text}>
+
         <Avatar>
           <AccountBoxOutlinedIcon
             style={{ color: green[500], fontSize: 40, background: "#fff" }}
           />
         </Avatar>
+        <Typography
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              paddingLeft: "10px",
+            }}
+          >
+            Matricula: {matricula}
+            </Typography>
+            </Grid>
         <Grid item className={classes.text}>
           <Typography
             style={{
