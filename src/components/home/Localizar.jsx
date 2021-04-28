@@ -16,6 +16,11 @@ import credential from "../../utils/relatorioclientesantarosa-a45ba7969463.json"
 import { GoogleSpreadsheet } from "google-spreadsheet";
 import Spiner from "../../utils/spiner";
 import { green } from '@material-ui/core/colors';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -62,6 +67,11 @@ const useStyles = makeStyles((theme) => ({
   linkName: {
     fontSize: "18px",
   },
+  full: {
+    color: "primary",
+  },
+
+  
 }));
 
 export default function Localizar() {
@@ -69,12 +79,14 @@ export default function Localizar() {
   const [list, setList] = useState([]);
   const [localizar, setLocalizar] = useState("");
   const [localizarId, setLocalizarId] = useState("");
+  const [localizarMatricula, setLocalizarMatricula] = useState("");
   const [open, setOpen] = useState(false);
   const [del, setDel] = useState(false);
   const [snack, setSnack] = useState(false);
   const { edit, setEdit } = useContext(StoredContext);
   const [snackExport, setSnackExport] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [checkBoxValue, setCheckBoxValue] = React.useState('nome');
 
   useEffect(() => {
     const dataRef = firebase.database().ref("clientes");
@@ -88,6 +100,10 @@ export default function Localizar() {
     });
   }, []);
 
+  const handleChange = (event) => {
+    setCheckBoxValue(event.target.value);
+  };
+
   const handleDelete = () => {
     const dataRef = firebase
       .database()
@@ -97,6 +113,7 @@ export default function Localizar() {
     setDel(false);
     setLocalizar("");
     setLocalizarId("");
+    setLocalizarMatricula("");
     handleSnack();
     setEdit(false);
   };
@@ -116,6 +133,11 @@ export default function Localizar() {
 
   const listFiltered = list.filter((item) => {
     return item.name.toLowerCase().includes(localizar.toLowerCase());
+  });
+
+  const listFilteredMatricula = list.filter((item) => {
+    if (!item.matricula) {return null}
+    return item.matricula.toLowerCase().includes(localizarMatricula.toLowerCase());
   });
 
   const listFilteredId = list.filter((item) => {
@@ -227,6 +249,14 @@ export default function Localizar() {
     <div className={classes.root}>
       <h2>Localizar cadastro</h2>
 
+      <FormControl component="fieldset" style={{display: 'flex', flexDirection: 'row', }}>
+      <h3 component="legend" style={{marginRight: '20px'}}>Por:</h3>
+      <RadioGroup aria-label="select"  value={checkBoxValue} onChange={handleChange} style={{display: 'flex', flexDirection: 'row'}}>
+        <FormControlLabel value="nome" control={<Radio />} label="Nome" />
+        <FormControlLabel value="matricula" control={<Radio />} label="Matricula" />
+      </RadioGroup>
+    </FormControl>
+
     {localizarId?
 
       <div>
@@ -234,7 +264,7 @@ export default function Localizar() {
           style={{ marginLeft: "5px" }}
           variant="outlined"
           size="large"
-          color="primary"
+          color='primary'
           onClick={(e) => (setLocalizar(""), setLocalizarId(""), setEdit(""))}
         >
           Nova Busca
@@ -242,7 +272,9 @@ export default function Localizar() {
       </div>
 
 :
+
       <div className={classes.searchBox}>
+        {checkBoxValue === 'nome' &&
         <TextField
           className={classes.full}
           id="outlined-required"
@@ -251,32 +283,37 @@ export default function Localizar() {
           onChange={(e) => setLocalizar(e.target.value)}
           value={localizar}
           size={"small"}
+          color='primary'
         />
-        {/* <Button
-          style={{ marginLeft: "5px" }}
+      }
+        {checkBoxValue === 'matricula' &&
+        <TextField
+          className={classes.full}
+          id="outlined-required"
+          label="Busca por matricula"
           variant="outlined"
-          size="large"
-          color="primary"
-          onClick={(e) => (setLocalizar(""), setLocalizarId(""), setEdit(""))}
-        >
-          Localizar
-        </Button> */}
+          onChange={(e) => setLocalizarMatricula(e.target.value)}
+          value={localizarMatricula}
+          size={"small"}
+        />
+      }
 
         <Button
           style={{ marginLeft: "80px" }}
           variant="outlined"
           size="large"
-          color="default"
+          color="secondary"
           onClick={handleSnackExportar}
+          disabled={localizarMatricula !== '' || localizar !== '' ? true:false}
         >
-          Exportar
+          Exportar para google drive
         </Button>
       </div>
 }
       <div style={{ display: "flex", justifyContent: "center" }}>
         {isLoading ? <Spiner /> : ""}
       </div>
-      <p className={classes.subTitle}> Nome do Aluno | Sigla da Escola</p>
+      <p className={classes.subTitle}> Matricula | Nome do Aluno | Sigla da Escola</p>
       <hr
         style={{
           marginRight: "15%",
@@ -324,8 +361,8 @@ export default function Localizar() {
         />
       </div>
 
-      {!localizarId & !edit
-        ? listFiltered.map((item, index) => (
+      {localizarMatricula?
+      listFilteredMatricula.map((item, index) => (
             <div className={classes.root}>
               <Grid container spacing={1}>
                 <Grid item xs={10}>
@@ -342,7 +379,37 @@ export default function Localizar() {
                           setLocalizar(item.name), setLocalizarId(item.id)
                         )}
                       >
-                        {item.name} | {item.escola}
+                       {item.matricula} | {item.name} | {item.escola}
+                      </Link>{" "}
+                    </b>{" "}
+                  </div>
+                  <hr />
+                </Grid>
+              </Grid>
+            </div>
+          )):
+
+
+      !localizarId & !edit
+        ?
+         listFiltered.map((item, index) => (
+            <div className={classes.root}>
+              <Grid container spacing={1}>
+                <Grid item xs={10}>
+                  <div className={classes.linhaLista}>
+                    <b>
+                      {" "}
+                      <Link
+                        key={index}
+                        className={classes.linkName}
+                        color="inherit"
+                        underline="none"
+                        component="button"
+                        onClick={(e) => (
+                          setLocalizar(item.name), setLocalizarId(item.id)
+                        )}
+                      >
+                       {item.matricula} | {item.name} | {item.escola}
                       </Link>{" "}
                     </b>{" "}
                   </div>
@@ -369,7 +436,7 @@ export default function Localizar() {
                             component="button"
                             onClick={(e) => setLocalizarId(item.id)}
                           >
-                            {item.name} | {item.escola}
+                           {item.matricula} | {item.name} | {item.escola}
                           </Link>
                         </b>
                         <div style={{ display: "flex" }}>
@@ -408,7 +475,7 @@ export default function Localizar() {
               </Grid>
             </div>
           ))}
-
+        
       {open ? (
         <div>
           <Modal
