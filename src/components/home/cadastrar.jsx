@@ -91,7 +91,9 @@ export default function Cadastrar() {
     let min = Math.ceil(5000);
     let max = Math.floor(10000);
     let matricula = Math.floor(Math.random() * (max -min)) + min
-    setMatricula(matricula)
+    const numerotostring = matricula.toString()
+
+    setMatricula(numerotostring)
 
   },[])
 

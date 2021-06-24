@@ -265,7 +265,7 @@ export default function Localizar() {
           variant="outlined"
           size="large"
           color='primary'
-          onClick={(e) => (setLocalizar(""), setLocalizarId(""), setEdit(""))}
+          onClick={(e) => (setLocalizar(""), setLocalizarId(""), setEdit(""), setLocalizarMatricula(""))}
         >
           Nova Busca
         </Button>
@@ -274,6 +274,7 @@ export default function Localizar() {
 :
 
       <div className={classes.searchBox}>
+
         {checkBoxValue === 'nome' &&
         <TextField
           className={classes.full}
@@ -281,6 +282,7 @@ export default function Localizar() {
           label="Busca por nome"
           variant="outlined"
           onChange={(e) => setLocalizar(e.target.value)}
+          onFocus={(e) => setLocalizarMatricula('')}
           value={localizar}
           size={"small"}
           color='primary'
@@ -293,6 +295,7 @@ export default function Localizar() {
           label="Busca por matricula"
           variant="outlined"
           onChange={(e) => setLocalizarMatricula(e.target.value)}
+          onFocus={(e) => setLocalizar('')}
           value={localizarMatricula}
           size={"small"}
         />
@@ -361,8 +364,8 @@ export default function Localizar() {
         />
       </div>
 
-      {localizarMatricula?
-      listFilteredMatricula.map((item, index) => (
+    {localizarMatricula & !localizarId? 
+           listFilteredMatricula.map((item, index) => (
             <div className={classes.root}>
               <Grid container spacing={1}>
                 <Grid item xs={10}>
@@ -376,7 +379,7 @@ export default function Localizar() {
                         underline="none"
                         component="button"
                         onClick={(e) => (
-                          setLocalizar(item.name), setLocalizarId(item.id)
+                           setLocalizarId(item.id), setLocalizarMatricula(item.matricula || '9999')
                         )}
                       >
                        {item.matricula} | {item.name} | {item.escola}
@@ -387,10 +390,12 @@ export default function Localizar() {
                 </Grid>
               </Grid>
             </div>
-          )):
+          ))
+:''  
+  
+  }
 
-
-      !localizarId & !edit
+      {!localizarId & !edit & !localizarMatricula
         ?
          listFiltered.map((item, index) => (
             <div className={classes.root}>
@@ -406,7 +411,7 @@ export default function Localizar() {
                         underline="none"
                         component="button"
                         onClick={(e) => (
-                          setLocalizar(item.name), setLocalizarId(item.id)
+                          setLocalizar(item.name), setLocalizarId(item.id), setLocalizarMatricula(item.matricula || '9999')
                         )}
                       >
                        {item.matricula} | {item.name} | {item.escola}
