@@ -8,6 +8,7 @@ import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import ModalView from "./modalView";
+import ModalViewMobile from "./modalViewMobile";
 import Link from "@material-ui/core/Link";
 import Editar from "./editar";
 import Snackbar from "@material-ui/core/Snackbar";
@@ -26,21 +27,31 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     marginLeft: "5%",
-  },
-  subTitle: {
-    marginLeft: "5%",
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: "0px",
+    }
+
   },
   searchBox: {
-    marginLeft: "30%",
     marginBottom: "2%",
   },
   button: {
     marginLeft: "6%",
+    [theme.breakpoints.down('sm')]: {
+      margin: "10px"
+    }
+
   },
   linhaLista: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: "column",
+      margin: "10px"
+    }
+
+    
   },
   modal: {
     display: "flex",
@@ -54,6 +65,13 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
     width: "65%",
+    [theme.breakpoints.down('sm')]: {
+      width: "100vw",
+      height: "100%",
+      overflowY: "auto"
+      
+    }
+
   },
   paperRed: {
     backgroundColor: theme.palette.background.paper,
@@ -246,6 +264,10 @@ export default function Localizar() {
     setOpen(false);
   };
 
+
+    const mobile = window.screen.width < 1024
+
+
   return (
     <div className={classes.root}>
       <h2>Localizar cadastro</h2>
@@ -318,7 +340,7 @@ export default function Localizar() {
           )}
 
           <Button
-            style={{ marginLeft: "80px" }}
+            style={mobile? { marginLeft: "0px", marginTop: "25px" } : { marginLeft: "80px" }}
             variant="outlined"
             size="large"
             color="secondary"
@@ -334,7 +356,7 @@ export default function Localizar() {
       <div style={{ display: "flex", justifyContent: "center" }}>
         {isLoading ? <Spiner /> : ""}
       </div>
-      <p className={classes.subTitle}>
+      <p style={{ marginLeft: mobile? "0px" : "5%"}} >
         {" "}
         Matricula | Nome do Aluno | Sigla da Escola
       </p>
@@ -389,7 +411,7 @@ export default function Localizar() {
         listFilteredMatricula.map((item, index) => 
           <div className={classes.root}>
             <Grid container spacing={1}>
-              <Grid item xs={10}>
+              <Grid item xm={10}>
                 <div className={classes.linhaLista}>
                   <b>
                     {" "}
@@ -409,8 +431,8 @@ export default function Localizar() {
                     </Link>{" "}
                   </b>{" "}
                   {listFilteredMatricula.length === 1 && localizarId && (
-                    <div style={{ display: "flex" }}>
-                      <>
+                    <div style={{ display: "flex", margin: "35px", display: "flex", flexDirection: "column"}}>
+                    <>
                         <Button
                           className={classes.button}
                           variant="outlined"
@@ -449,11 +471,11 @@ export default function Localizar() {
         listFiltered.map((item, index) => (
           <div className={classes.root}>
             <Grid container spacing={1}>
-              <Grid item xs={10}>
+              <Grid item xm={10}>
                 <div className={classes.linhaLista}>
                   <b>
                     {" "}
-                    <Link
+                    <Link 
                       key={index}
                       className={classes.linkName}
                       color="inherit"
@@ -468,8 +490,9 @@ export default function Localizar() {
                     </Link>{" "}
                   </b>{" "}
                   {listFiltered.length === 1 && localizarId && (
-                    <div style={{ display: "flex" }}>
-                      <>
+                    !mobile? (
+                    <div style={{ display: "flex", margin: "35px", display: "flex", flexDirection: mobile? "column": "row"}}>
+                    <>
                         <Button
                           className={classes.button}
                           variant="outlined"
@@ -496,6 +519,19 @@ export default function Localizar() {
                         </Button>
                       </>
                     </div>
+                    ):(
+                      <div style={{ display: "flex", margin: "35px", display: "flex", flexDirection: mobile? "column": "row"}}>
+                        <Button
+                          className={classes.button}
+                          variant="outlined"
+                          color="primary"
+                          onClick={(e) => setOpen(true)}
+                        >
+                          Detalhes
+                        </Button>
+
+                      </div>
+                    )
                   )}
 
                 </div>
@@ -505,65 +541,6 @@ export default function Localizar() {
           </div>
         ))}
 
-      {/* {listFilteredId.map((item, index) => ( 
-            <div className={classes.root}>
-              <Grid container spacing={1}>
-                <Grid item xs={10}>
-                  {edit ? (
-                    ""
-                  ) : (
-                    
-                    <>
-                      <div className={classes.linhaLista}>
-                        <b>
-                          <Link
-                            key={index}
-                            className={classes.linkName}
-                            color="inherit"
-                            underline="none"
-                            component="button"
-                            onClick={(e) => setLocalizarId(item.id)}
-                          >
-                           {item.matricula} | {item.name} | {item.escola}
-                          </Link>
-                        </b>
-                        <div style={{ display: "flex" }}>
-                          <>
-                            <Button
-                              className={classes.button}
-                              variant="outlined"
-                              style={{ color: green[800] }}
-                              onClick={(e) => setOpen(true)}
-                            >
-                              Detalhes
-                            </Button>
-                            <Button
-                              className={classes.button}
-                              variant="outlined"
-                              color="primary"
-                              onClick={(e) => setEdit(true)}
-                            >
-                              Editar
-                            </Button>
-                            <Button
-                              className={classes.button}
-                              variant="outlined"
-                              color="secondary"
-                              onClick={(e) => setDel(true)}
-                            >
-                              Deletar
-                            </Button>
-                          </>
-                        </div>
-                      </div>
-                      <hr />
-                    </>
-                  )}
-                </Grid>
-              </Grid>
-            </div>
-          ))
-          } */}
 
       {open ? (
         <div>
@@ -590,7 +567,7 @@ export default function Localizar() {
                 </div>
                 <Button
                   className={classes.button}
-                  variant="outlined"
+                  variant="contained"
                   style={{ color: green[800] }}
                   onClick={(e) => setOpen(false)}
                 >

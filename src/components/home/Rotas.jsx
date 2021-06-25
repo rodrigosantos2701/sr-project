@@ -19,10 +19,20 @@ const useStyles = makeStyles((theme) => ({
   },
   medium: {
     width: "25%",
+    [theme.breakpoints.down('sm')]: {
+      width: "100%",
+    }
+
   },
   searchBox: {
     marginLeft: "30%",
     marginBottom: "2%",
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: "0px",
+      width: "100%"
+    }
+
+    
   },
   listOfRotas: {
     display: "flex",
@@ -38,7 +48,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Rotas() {
-  debugger
   const classes = useStyles();
   const [list, setList] = useState([]);
   const [rota, setRota] = useState(0);
@@ -106,19 +115,19 @@ export default function Rotas() {
           ""
         ) : (
           <Grid container spacing={1} direction="row" xs={12}>
-            <Grid item xs={2}>
-              <Typography variant="subtitle1">Nome</Typography>
+            <Grid item xm={2}>
+              <Typography variant="subtitle1">[Matricula] - Nome</Typography>
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xm={2}>
               <Typography variant="subtitle1">Endereço</Typography>
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xm={2}>
               <Typography variant="subtitle1">Complemento</Typography>
             </Grid>
-            <Grid item xs={1}>
+            <Grid item xm={1}>
               <Typography variant="subtitle1">Turno</Typography>
             </Grid>
-            <Grid item xs={5}>
+            <Grid item xm={5}>
               <Typography variant="subtitle1">Horário</Typography>
             </Grid>
           </Grid>
@@ -140,22 +149,22 @@ export default function Rotas() {
         list.map((item) => (
           <div className={classes.root}>
             <Grid container spacing={1} direction="row" xs={12}>
-              <Grid item xs={2}>
-                <Typography variant="subtitle1">{item.name}</Typography>
+              <Grid item xs={12} sm={2}>
+                <Typography variant="subtitle1">[{item.matricula}] - {item.name}</Typography>
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={12} sm={2}>
                 <Typography variant="subtitle1">
                   {item.endereco},{item.numero} - {item.bairro}
                 </Typography>
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={4} sm={2}>
                 <Typography variant="subtitle1">{item.complemento}</Typography>
               </Grid>
-              <Grid item xs={1}>
+              <Grid item xs={4} sm={1}>
                 <Typography variant="subtitle1">{item.turno}</Typography>
               </Grid>
 
-              <Grid item xs={5}>
+              <Grid item xs={4}>
                 {item.itinerario1[0] === rota ? (
                   <Grid container spacing={1} direction="row" xs={8}>
                     <Grid item xs={2}>

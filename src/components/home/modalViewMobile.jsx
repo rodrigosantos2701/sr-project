@@ -12,8 +12,6 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
     flexDirection: "column",
-    marginLeft: "3%",
-    marginBottom:"3%",
 
   },
 
@@ -29,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ModalView(listFiltered) {
+function ModalViewMobile(listFiltered) {
   const data = listFiltered;
   const {
     name,
@@ -60,7 +58,6 @@ function ModalView(listFiltered) {
   
   const classes = useStyles();
   
-  console.log("==",data)
   return (
     <div>
       <Grid container className={classes.container}>
@@ -470,4 +467,4 @@ function ModalView(listFiltered) {
   );
 }
 
-export default ModalView;
+export default ModalViewMobile;

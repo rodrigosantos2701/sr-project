@@ -16,27 +16,60 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     marginLeft: "5%",
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: "0px",
+    }
+
+
   },
   full: {
     width: "47%",
     marginRight: "10px",
+    [theme.breakpoints.down('sm')]: {
+      width: "100%",
+      marginBottom: "7px"
+    }
+
   },
 
   large: {
     width: "31%",
     marginRight: "10px",
+    [theme.breakpoints.down('sm')]: {
+      width: "100%",
+      marginBottom: "7px"
+
+    }
+
   },
   medium: {
     width: "15%",
     marginRight: "10px",
+    [theme.breakpoints.down('sm')]: {
+      width: "100%",
+      marginBottom: "7px"
+
+    }
   },
   mediumCustom: {
     width: "15%",
     marginRight: "6px",
+    [theme.breakpoints.down('sm')]: {
+      width: "100%",
+      marginBottom: "7px"
+
+    }
+
   },
   buttonBotton: {
     marginTop: "30px",
     marginRight: "10px"
+  },
+  textField: {
+    [theme.breakpoints.down('sm')]: {
+      width: "100%",
+      marginBottom: "7px"
+    }
   },
   buttonMinimizar: {
     marginTop: "30px",
@@ -176,14 +209,14 @@ export default function Cadastrar() {
         <Grid container spacing={1}>
 
           <Grid item xs={12}>
-        <TextField
-              className={classes.medium}
-              id="outlined-required"
-              label="Matricula"
-              variant="outlined"
-              onChange={(e) => setMatricula(e.target.value)}
-              value={matricula}
-            />
+          <TextField 
+                className={classes.medium}
+                id="outlined-required"
+                label="Matricula"
+                variant="outlined"
+                onChange={(e) => setMatricula(e.target.value)}
+                value={matricula}
+              />
             <TextField
               className={classes.large}
               required
@@ -394,6 +427,7 @@ export default function Cadastrar() {
                 Itinerário
               </InputLabel>
               <Select
+              className={classes.select}
                 labelId="demo-simple-select-outlined-label"
                 id="demo-simple-select-outlined"
                 value={itinerario1}
