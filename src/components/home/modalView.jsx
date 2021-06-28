@@ -13,8 +13,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     marginLeft: "3%",
-    marginBottom:"3%",
-
+    marginBottom: "3%",
   },
 
   text: {
@@ -22,10 +21,22 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     padding: "5px",
     flexDirection: "row",
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down("sm")]: {
       flexDirection: "column",
-    }
-
+      alignItems: "end",
+    },
+  },
+  semMarginLeftnoMobile: {
+    marginLeft: "30px",
+    [theme.breakpoints.down("sm")]: {
+      marginLeft: "10px",
+    },
+  },
+  semPaddingLeftnoMobile: {
+    marginLeft: "30px",
+    [theme.breakpoints.down("sm")]: {
+      marginLeft: "10px",
+    },
   },
 }));
 
@@ -57,21 +68,20 @@ function ModalView(listFiltered) {
     itinerario4,
     matricula,
   } = data.listFiltered[0];
-  
+
   const classes = useStyles();
-  
-  console.log("==",data)
+
+  console.log("==", data);
   return (
     <div>
       <Grid container className={classes.container}>
-      <Grid item className={classes.text}>
-
-        <Avatar>
-          <AccountBoxOutlinedIcon
-            style={{ color: green[500], fontSize: 40, background: "#fff" }}
-          />
-        </Avatar>
-        <Typography
+        <Grid item className={classes.text}>
+          <Avatar>
+            <AccountBoxOutlinedIcon
+              style={{ color: green[500], fontSize: 40, background: "#fff" }}
+            />
+          </Avatar>
+          <Typography
             style={{
               display: "flex",
               flexDirection: "row",
@@ -79,8 +89,8 @@ function ModalView(listFiltered) {
             }}
           >
             Matricula: {matricula}
-            </Typography>
-            </Grid>
+          </Typography>
+        </Grid>
         <Grid item className={classes.text}>
           <Typography
             style={{
@@ -97,10 +107,10 @@ function ModalView(listFiltered) {
           </Typography>
 
           <Typography
+            className={classes.semMarginLeftnoMobile}
             style={{
               display: "flex",
               flexDirection: "row",
-              paddingLeft: "30px",
             }}
           >
             Data de nascimento:
@@ -192,8 +202,12 @@ function ModalView(listFiltered) {
               {" "}
               <strong> {numero} </strong>
             </span>
+            <span style={{ paddingLeft: "8px" }}>
+              {" "}
+              <strong> - {complemento} </strong>
+            </span>
           </Typography>
-          <Typography
+          {/* <Typography
             style={{
               display: "flex",
               flexDirection: "row",
@@ -205,12 +219,12 @@ function ModalView(listFiltered) {
               {" "}
               <strong> {complemento} </strong>
             </span>
-          </Typography>
+          </Typography> */}
           <Typography
+            className={classes.semPaddingLeftnoMobile}
             style={{
               display: "flex",
               flexDirection: "row",
-              paddingLeft: "30px",
             }}
           >
             Bairro:
@@ -220,10 +234,10 @@ function ModalView(listFiltered) {
             </span>
           </Typography>
           <Typography
+            className={classes.semPaddingLeftnoMobile}
             style={{
               display: "flex",
               flexDirection: "row",
-              paddingLeft: "20px",
             }}
           >
             Cep:

@@ -8,7 +8,6 @@ import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import ModalView from "./modalView";
-import ModalViewMobile from "./modalViewMobile";
 import Link from "@material-ui/core/Link";
 import Editar from "./editar";
 import Snackbar from "@material-ui/core/Snackbar";
@@ -264,6 +263,13 @@ export default function Localizar() {
     setOpen(false);
   };
 
+  const handleEscolhaDoCheckBoxValue = () => {
+    if (checkBoxValue === 'nome'){
+      return listFiltered
+    }
+    if (checkBoxValue === 'matricula')
+    return listFilteredMatricula
+  }
 
     const mobile = window.screen.width < 1024
 
@@ -407,68 +413,10 @@ export default function Localizar() {
         />
       </div>
 
-      {checkBoxValue === "matricula" &&
-        listFilteredMatricula.map((item, index) => 
-          <div className={classes.root}>
-            <Grid container spacing={1}>
-              <Grid item xm={10}>
-                <div className={classes.linhaLista}>
-                  <b>
-                    {" "}
-                    <Link
-                      key={index}
-                      className={classes.linkName}
-                      color="inherit"
-                      underline="none"
-                      component="button"
-                      onClick={(e) => (
-                        setLocalizarId(item.id),
-                        setLocalizarMatricula(item.matricula),
-                        setLocalizarId(item.id)
-                      )}
-                    >
-                      {item.matricula} | {item.name} | {item.escola}
-                    </Link>{" "}
-                  </b>{" "}
-                  {listFilteredMatricula.length === 1 && localizarId && (
-                    <div style={{ display: "flex", margin: "35px", display: "flex", flexDirection: "column"}}>
-                    <>
-                        <Button
-                          className={classes.button}
-                          variant="outlined"
-                          style={{ color: green[800] }}
-                          onClick={(e) => setOpen(true)}
-                        >
-                          Detalhes
-                        </Button>
-                        <Button
-                          className={classes.button}
-                          variant="outlined"
-                          color="primary"
-                          onClick={(e) => setEdit(true)}
-                        >
-                          Editar
-                        </Button>
-                        <Button
-                          className={classes.button}
-                          variant="outlined"
-                          color="secondary"
-                          onClick={(e) => setDel(true)}
-                        >
-                          Deletar
-                        </Button>
-                      </>
-                    </div>
-                  )}
-                </div>
-                <hr />
-              </Grid>
-            </Grid>
-          </div>
-        )}
+      
 
-      {checkBoxValue === "nome" &&
-        listFiltered.map((item, index) => (
+
+      {handleEscolhaDoCheckBoxValue().map((item, index) => (
           <div className={classes.root}>
             <Grid container spacing={1}>
               <Grid item xm={10}>
@@ -483,13 +431,14 @@ export default function Localizar() {
                       component="button"
                       onClick={(e) => (
                         setLocalizar(item.name),
-                        setLocalizarId(item.id)
+                        setLocalizarId(item.id),
+                        setLocalizarMatricula(item.matricula)
                       )}
                     >
                       {item.matricula} | {item.name} | {item.escola}
                     </Link>{" "}
                   </b>{" "}
-                  {listFiltered.length === 1 && localizarId && (
+                  {handleEscolhaDoCheckBoxValue().length === 1 && localizarId && (
                     !mobile? (
                     <div style={{ display: "flex", margin: "35px", display: "flex", flexDirection: mobile? "column": "row"}}>
                     <>
