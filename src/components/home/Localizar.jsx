@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
       margin: "10px"
     }
 
-    
+
   },
   modal: {
     display: "flex",
@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
       width: "100vw",
       height: "100%",
       overflowY: "auto"
-      
+
     }
 
   },
@@ -151,7 +151,7 @@ export default function Localizar() {
 
   const listFilteredMatricula = list.filter((item) => {
     if (!item.matricula) {
-      return ;
+      return;
     }
     return item.matricula
       .toLowerCase()
@@ -264,14 +264,14 @@ export default function Localizar() {
   };
 
   const handleEscolhaDoCheckBoxValue = () => {
-    if (checkBoxValue === 'nome'){
+    if (checkBoxValue === 'nome') {
       return listFiltered
     }
     if (checkBoxValue === 'matricula')
-    return listFilteredMatricula
+      return listFilteredMatricula
   }
 
-    const mobile = window.screen.width < 1024
+  const mobile = window.screen.width < 1024
 
 
   return (
@@ -345,8 +345,8 @@ export default function Localizar() {
             />
           )}
 
-          <Button
-            style={mobile? { marginLeft: "0px", marginTop: "25px" } : { marginLeft: "80px" }}
+          {/* <Button
+            style={mobile ? { marginLeft: "0px", marginTop: "25px" } : { marginLeft: "80px" }}
             variant="outlined"
             size="large"
             color="secondary"
@@ -356,13 +356,13 @@ export default function Localizar() {
             }
           >
             Exportar para google drive
-          </Button>
+          </Button> */}
         </div>
       )}
       <div style={{ display: "flex", justifyContent: "center" }}>
         {isLoading ? <Spiner /> : ""}
       </div>
-      <p style={{ marginLeft: mobile? "0px" : "5%"}} >
+      <p style={{ marginLeft: mobile ? "0px" : "5%" }} >
         {" "}
         Matricula | Nome do Aluno | Sigla da Escola
       </p>
@@ -413,50 +413,50 @@ export default function Localizar() {
         />
       </div>
 
-      
+
 
 
       {handleEscolhaDoCheckBoxValue().map((item, index) => (
-          <div className={classes.root}>
-            <Grid container spacing={1}>
-              <Grid item xm={10}>
-                <div className={classes.linhaLista}>
-                  <b>
-                    {" "}
-                    <Link 
-                      key={index}
-                      className={classes.linkName}
-                      color="inherit"
-                      underline="none"
-                      component="button"
-                      onClick={(e) => (
-                        setLocalizar(item.name),
-                        setLocalizarId(item.id),
-                        setLocalizarMatricula(item.matricula)
-                      )}
-                    >
-                      {item.matricula} | {item.name} | {item.escola}
-                    </Link>{" "}
-                  </b>{" "}
-                  {handleEscolhaDoCheckBoxValue().length === 1 && localizarId && (
-                    !mobile? (
-                    <div style={{ display: "flex", margin: "35px", display: "flex", flexDirection: mobile? "column": "row"}}>
-                    <>
-                        <Button
+        <div className={classes.root}>
+          <Grid container spacing={1}>
+            <Grid item xm={10}>
+              <div className={classes.linhaLista}>
+                <b>
+                  {" "}
+                  <Link
+                    key={index}
+                    className={classes.linkName}
+                    color="inherit"
+                    underline="none"
+                    component="button"
+                    onClick={(e) => (
+                      setLocalizar(item.name),
+                      setLocalizarId(item.id),
+                      setLocalizarMatricula(item.matricula)
+                    )}
+                  >
+                    {item.matricula} | {item.name} | {item.escola}
+                  </Link>{" "}
+                </b>{" "}
+                {handleEscolhaDoCheckBoxValue().length === 1 && localizarId && (
+                  !mobile ? (
+                    <div style={{ display: "flex", margin: "35px", display: "flex", flexDirection: mobile ? "column" : "row" }}>
+                      <>
+                        {/* <Button
                           className={classes.button}
                           variant="outlined"
                           style={{ color: green[800] }}
                           onClick={(e) => setOpen(true)}
                         >
                           Detalhes
-                        </Button>
+                        </Button> */}
                         <Button
                           className={classes.button}
                           variant="outlined"
                           color="primary"
                           onClick={(e) => setEdit(true)}
                         >
-                          Editar
+                          Ver Editar
                         </Button>
                         <Button
                           className={classes.button}
@@ -468,9 +468,9 @@ export default function Localizar() {
                         </Button>
                       </>
                     </div>
-                    ):(
-                      <div style={{ display: "flex", margin: "35px", display: "flex", flexDirection: mobile? "column": "row"}}>
-                        <Button
+                  ) : (
+                    <div style={{ display: "flex", margin: "35px", display: "flex", flexDirection: mobile ? "column" : "row" }}>
+                      <Button
                           className={classes.button}
                           variant="outlined"
                           color="primary"
@@ -478,17 +478,26 @@ export default function Localizar() {
                         >
                           Detalhes
                         </Button>
+                      {/* <Button
+                        className={classes.button}
+                        variant="outlined"
+                        color="primary"
+                        onClick={(e) => setEdit(true)}
+                      >
+                        Ver | Editar
+                      </Button> */}
 
-                      </div>
-                    )
-                  )}
 
-                </div>
-                <hr />
-              </Grid>
+                    </div>
+                  )
+                )}
+
+              </div>
+              <hr />
             </Grid>
-          </div>
-        ))}
+          </Grid>
+        </div>
+      ))}
 
 
       {open ? (

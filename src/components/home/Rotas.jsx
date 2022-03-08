@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
       width: "100%"
     }
 
-    
+
   },
   listOfRotas: {
     display: "flex",
@@ -50,9 +50,13 @@ const useStyles = makeStyles((theme) => ({
 export default function Rotas() {
   const classes = useStyles();
   const [list, setList] = useState([]);
-  const [rota, setRota] = useState(0);
+  const [filteredList, setFilteredList] = useState([]);
+
+  const [rota, setRota] = useState('0');
 
   useEffect(() => {
+
+    // Carregando Dados do FireBase
     const dataRef = firebase.database().ref("clientes");
     dataRef.on("value", (snapshot) => {
       const data = snapshot.val();
@@ -61,25 +65,28 @@ export default function Rotas() {
       for (let id in data) {
         arrayData.push(data[id]);
       }
+      // ---------
 
-      const arrayDataNoFiltered = arrayData.filter(
-        (item) =>
-          item.itinerario1[0] === rota ||
-          item.itinerario2[0] === rota ||
-          item.itinerario3[0] === rota ||
-          item.itinerario4[0] === rota
-      );
+      // DADOS
 
-      const arrayDataFiltered =  
-      arrayDataNoFiltered.sort((a, b) => (
-          a.horario1 > b.horario1 ? 1 : b.horario1 > a.horario1 ? -1 : 0 ||
-          a.horario2 > b.horario2 ? 1 : b.horario2 > a.horario2 ? -1 : 0 ||
-          a.horario3 > b.horario3 ? 1 : b.horario3 > a.horario3 ? -1 : 0 ||
-          a.horario4 > b.horario4 ? 1 : b.horario4 > a.horario4 ? -1 : 0
-        ))
+      const dadosArray = []
+      const arrayDataFilteredTotal = arrayData
+        .map((item) => item.itinerario
+          .sort((a, b) => (
+            a.rota === rota ? -1 : b.rota === rota ? 1 : 0
+          ))
+          .map((i) => { if (i.rota === rota ) 
+            return dadosArray.push(item)
+          })  
       
-
-      setList(arrayDataFiltered);
+        )
+        
+        dadosArray
+        .sort((a, b) => (
+          a.itinerario[0].horario > b.itinerario[0].horario ? 1 : b.itinerario[0].horario > a.itinerario[0].horario ? -1 : 0 
+        ))
+          
+      setList(dadosArray)
     });
   }, [rota]);
 
@@ -111,6 +118,7 @@ export default function Rotas() {
         </FormControl>{" "}
       </div>
       <div className={classes.root}>
+
         {!rota ? (
           ""
         ) : (
@@ -163,90 +171,33 @@ export default function Rotas() {
               <Grid item xs={4} sm={1}>
                 <Typography variant="subtitle1">{item.turno}</Typography>
               </Grid>
-
               <Grid item xs={4}>
-                {item.itinerario1[0] === rota ? (
-                  <Grid container spacing={1} direction="row" xs={8}>
-                    <Grid item xs={2}>
-                      <Typography variant="body1">
-                        {item.itinerario1[1]}
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Typography variant="body1">
-                        {item.itinerario1[2]}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                ) : (
-                  ""
-                )}
-                {item.itinerario2[0] === rota ? (
-                  <Grid container spacing={1} direction="row" xs={8}>
-                    <Grid item xs={2}>
-                      <Typography variant="body1">
-                        {item.itinerario2[1]}
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Typography variant="body1">
-                        {item.itinerario2[2]}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                ) : (
-                  ""
-                )}
+                {item.itinerario
+                  .map((i) => {
+                    if (i.rota === rota)
+                      return (
+                        <Grid container spacing={1} direction="row" xs={8}>
+                          <Grid item xs={6}>
+                            <Typography variant="body1">
+                              {i.itinerario}
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <Typography variant="body1">
+                              {i.horario}
+                            </Typography>
+                          </Grid>
+                        </Grid>
 
-                {item.itinerario3[0] === rota ? (
-                  <Grid container spacing={1} direction="row" xs={8}>
-                    <Grid item xs={2}>
-                      <Typography variant="body1">
-                        {item.itinerario3[1]}
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Typography variant="body1">
-                        {item.itinerario3[2]}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                ) : (
-                  ""
-                )}
+                      )
+                  })}
 
-                {item.itinerario4[0] === rota ? (
-                  <Grid container spacing={1} direction="row" xs={8}>
-                    <Grid item xs={2}>
-                      <Typography variant="body1">
-                        {item.itinerario4[1]}
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Typography variant="body1">
-                        {item.itinerario4[2]}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                ) : (
-                  ""
-                )}
               </Grid>
             </Grid>
             <hr style={{ marginRight: "15%" }} />
           </div>
         ))
-      ) : (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Spiner />
-        </div>
-      )}
+      ) : ("")}
     </div>
   );
 }

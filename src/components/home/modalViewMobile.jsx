@@ -49,9 +49,6 @@ function ModalViewMobile(listFiltered) {
     turma,
     turno,
     itinerario1,
-    itinerario2,
-    itinerario3,
-    itinerario4,
     matricula,
   } = data.listFiltered[0];
   
@@ -363,103 +360,6 @@ function ModalViewMobile(listFiltered) {
             </Box>
           )}
 
-          {itinerario2[0] === "" ? (
-            ""
-          ) : (
-            <Box
-              border={2}
-              bgcolor="text.secondary"
-              color="background.paper"
-              p={2}
-            >
-              <Typography
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  paddingLeft: "10px",
-                }}
-              >
-                {" "}
-                {itinerario2[3]} | Rota: {itinerario2[0]} | Horário:{" "}
-                {itinerario2[1]}
-              </Typography>
-              <Typography
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  paddingLeft: "10px",
-                }}
-              >
-                obs: {itinerario2[2]}
-              </Typography>
-            </Box>
-          )}
-        </Grid>
-
-        <Grid item className={classes.text}>
-          {itinerario3[0] === "" ? (
-            ""
-          ) : (
-            <Box
-              border={2}
-              bgcolor="text.secondary"
-              color="background.paper"
-              p={2}
-            >
-              <Typography
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  paddingLeft: "10px",
-                }}
-              >
-                {" "}
-                {itinerario3[3]} | Rota: {itinerario3[0]} | Horário:{" "}
-                {itinerario3[1]}
-              </Typography>
-              <Typography
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  paddingLeft: "10px",
-                }}
-              >
-                obs: {itinerario3[2]}
-              </Typography>
-            </Box>
-          )}
-
-          {itinerario4[0] === "" ? (
-            ""
-          ) : (
-            <Box
-              border={2}
-              bgcolor="text.secondary"
-              color="background.paper"
-              p={2}
-            >
-              <Typography
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  paddingLeft: "10px",
-                }}
-              >
-                {" "}
-                {itinerario4[3]} | Rota: {itinerario4[0]} | Horário:{" "}
-                {itinerario4[1]}
-              </Typography>
-              <Typography
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  paddingLeft: "10px",
-                }}
-              >
-                obs: {itinerario4[2]}
-              </Typography>
-            </Box>
-          )}
         </Grid>
       </Grid>
     </div>
