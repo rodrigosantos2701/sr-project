@@ -68,7 +68,6 @@ export default function Rotas() {
       // ---------
 
       // DADOS
-
       const dadosArray = []
       const arrayDataFilteredTotal = arrayData
         .map((item) => item.itinerario
@@ -177,12 +176,12 @@ export default function Rotas() {
                     if (i.rota === rota)
                       return (
                         <Grid container spacing={1} direction="row" xs={8}>
-                          <Grid item xs={6}>
+                          <Grid item xs={12}>
                             <Typography variant="body1">
                               {i.itinerario}
                             </Typography>
                           </Grid>
-                          <Grid item xs={6}>
+                          <Grid item xs={12}>
                             <Typography variant="body1">
                               {i.horario}
                             </Typography>

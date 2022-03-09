@@ -1,0 +1,5 @@
+FireBase Deploy:
+npm install -g firebase-tools
+firebase login   
+yarn build  
+firebase deploy     
