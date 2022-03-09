@@ -162,103 +162,6 @@ export default function Localizar() {
     return item.id.toLowerCase().includes(localizarId.toLowerCase());
   });
 
-  const handleSnackExportar = async () => {
-    setIsLoading(true);
-    const doc = new GoogleSpreadsheet(
-      "1mqcc970ejWHqucUNaGkJyk9UjsiRgKeSMlxuZTfiDcY"
-    );
-    const client_email =
-      "santarosa@relatorioclientesantarosa.iam.gserviceaccount.com";
-    const { private_key } = credential;
-    await doc.useServiceAccountAuth({
-      client_email,
-      private_key,
-    });
-    await doc.loadInfo();
-    const sheet = doc.sheetsByIndex[0];
-    const sheetData = list;
-    await sheet.clear();
-    await sheet.setHeaderRow({
-      col1: "name",
-      col3: "escola",
-      col4: "turno",
-      col2: "age",
-      col5: "serie",
-      col6: "turma",
-      col8: "endereco",
-      col9: "numero",
-      col11: "complemento",
-      col10: "bairro",
-      col7: "cep",
-      col13: "parentesco",
-      col12: "responsavel",
-      col14: "cpf",
-      col15: "celular",
-      col16: "telefone",
-      col17: "emergencia",
-      col18: "email",
-      col31: "iti1",
-      col19: "rota1",
-      col23: "horario1",
-      col27: "obs1",
-      col32: "iti2",
-      col20: "rota2",
-      col24: "horario2",
-      col28: "obs2",
-      col33: "iti3",
-      col21: "rota3",
-      col25: "horario3",
-      col29: "obs3",
-      col34: "iti4",
-      col22: "rota4",
-      col26: "horario4",
-      col30: "obs4",
-      col35: "anotacoes",
-    });
-
-    await sheet.addRows(sheetData);
-    await sheet.setHeaderRow({
-      col1: "Nome",
-      col3: "Escola",
-      col4: "Turno",
-      col2: "Data Nascimento",
-      col5: "Serie",
-      col6: "Turma",
-      col8: "Endereco",
-      col9: "Numero",
-      col11: "Complemento",
-      col10: "Bairro",
-      col7: "CEP",
-      col13: "Parentesco",
-      col12: "Responsavel",
-      col14: "CPF",
-      col15: "Celular",
-      col16: "Telefone",
-      col17: "Emergencia",
-      col18: "E-mail",
-      col31: "1ºItinerario",
-      col19: "1ºRota",
-      col23: "1°Horario",
-      col27: "1ºObs",
-      col32: "2ºItinerario",
-      col20: "2ºRota",
-      col24: "2ºHorario",
-      col28: "2ºObs",
-      col33: "3ºItinerario",
-      col21: "3ºRota",
-      col25: "3ºHorario",
-      col29: "3ºObs",
-      col34: "4ºItinerario",
-      col22: "4ºRota",
-      col26: "4ºHorario",
-      col30: "4ºObs",
-      col35: "Anotacoes",
-    });
-
-    setSnackExport(true);
-    setIsLoading(false);
-  };
-
   const handleClose = () => {
     setOpen(false);
   };
@@ -345,18 +248,6 @@ export default function Localizar() {
             />
           )}
 
-          {/* <Button
-            style={mobile ? { marginLeft: "0px", marginTop: "25px" } : { marginLeft: "80px" }}
-            variant="outlined"
-            size="large"
-            color="secondary"
-            onClick={handleSnackExportar}
-            disabled={
-              localizarMatricula !== "" || localizar !== "" ? true : false
-            }
-          >
-            Exportar para google drive
-          </Button> */}
         </div>
       )}
       <div style={{ display: "flex", justifyContent: "center" }}>
@@ -442,14 +333,6 @@ export default function Localizar() {
                   !mobile ? (
                     <div style={{ display: "flex", margin: "35px", display: "flex", flexDirection: mobile ? "column" : "row" }}>
                       <>
-                        {/* <Button
-                          className={classes.button}
-                          variant="outlined"
-                          style={{ color: green[800] }}
-                          onClick={(e) => setOpen(true)}
-                        >
-                          Detalhes
-                        </Button> */}
                         <Button
                           className={classes.button}
                           variant="outlined"
@@ -478,14 +361,6 @@ export default function Localizar() {
                         >
                           Detalhes
                         </Button>
-                      {/* <Button
-                        className={classes.button}
-                        variant="outlined"
-                        color="primary"
-                        onClick={(e) => setEdit(true)}
-                      >
-                        Ver | Editar
-                      </Button> */}
 
 
                     </div>

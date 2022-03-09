@@ -48,7 +48,7 @@ function ModalViewMobile(listFiltered) {
     serie,
     turma,
     turno,
-    itinerario1,
+    itinerario,
     matricula,
   } = data.listFiltered[0];
   
@@ -328,7 +328,7 @@ function ModalViewMobile(listFiltered) {
         </Grid>
 
         <Grid item className={classes.text}>
-          {itinerario1[0] === "" ? (
+          {itinerario === "" ? (
             ""
           ) : (
             <Box
@@ -345,8 +345,8 @@ function ModalViewMobile(listFiltered) {
                 }}
               >
                 {" "}
-                {itinerario1[3]} | Rota: {itinerario1[0]} | Horário:{" "}
-                {itinerario1[1]}
+                {/* {itinerario.map((item) => item)} */}
+
               </Typography>
               <Typography
                 style={{
